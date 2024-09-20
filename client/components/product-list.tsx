@@ -20,17 +20,25 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { PlusIcon, Pencil, Trash } from 'lucide-react'
-import ProductForm from './product-form'
+import { ProductFormComponent } from './product-form'
 
 // Simulated product data
-const initialProducts = [
+interface Product {
+  id: number
+  name: string
+  description: string
+  price: number
+  stock: number
+}
+
+const initialProducts: Product[] = [
   { id: 1, name: "Product 1", description: "Description 1", price: 19.99, stock: 100 },
   { id: 2, name: "Product 2", description: "Description 2", price: 29.99, stock: 50 },
   { id: 3, name: "Product 3", description: "Description 3", price: 39.99, stock: 75 },
 ]
 
 export function ProductListComponent() {
-  const [products, setProducts] = useState(initialProducts)
+  const [products, setProducts] = useState<Product[]>(initialProducts)
   const [searchTerm, setSearchTerm] = useState("")
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false)
 
@@ -42,7 +50,7 @@ export function ProductListComponent() {
     setProducts(products.filter(product => product.id !== id))
   }
 
-  const handleAddProduct = (newProduct: Omit<typeof initialProducts[0], 'id'>) => {
+  const handleAddProduct = (newProduct: Omit<Product, 'id'>) => {
     const id = Math.max(...products.map(p => p.id), 0) + 1
     setProducts([...products, { ...newProduct, id }])
     setIsAddDialogOpen(false)
@@ -69,7 +77,7 @@ export function ProductListComponent() {
                 Enter the details of the new product here.
               </DialogDescription>
             </DialogHeader>
-            <ProductForm
+            <ProductFormComponent
               onSubmit={handleAddProduct}
               onCancel={() => setIsAddDialogOpen(false)}
             />
@@ -93,7 +101,7 @@ export function ProductListComponent() {
               <TableCell>{product.id}</TableCell>
               <TableCell>{product.name}</TableCell>
               <TableCell>{product.description}</TableCell>
-              <TableCell>${product.price.toFixed(2)}</TableCell>
+              <TableCell>${typeof product.price === 'number' ? product.price.toFixed(2) : '0.00'}</TableCell>
               <TableCell>{product.stock}</TableCell>
               <TableCell>
                 <div className="flex space-x-2">
