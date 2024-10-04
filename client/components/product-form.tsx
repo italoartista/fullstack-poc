@@ -55,7 +55,7 @@ export function ProductFormComponent({ initialProduct, onSubmit, onCancel }: Pro
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit} action='http://localhost:3000/products' className="space-y-4">
       <div>
         <Label htmlFor="name">Name</Label>
         <Input
