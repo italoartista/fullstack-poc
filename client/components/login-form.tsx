@@ -51,7 +51,20 @@ export function LoginForm() {
     setLoading(true)
     setError(null)
     try {
-      await login(data.email, data.password)
+      const response = await fetch('http://localhost:3001/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+
+      if (!response.ok) {
+        throw new Error('Erro ao fazer login')
+      }
+
+      const result = await response.json()
+      await login(result.token)
       setSuccess(true)
       router.push("/chatbot")
     } catch (error) {
