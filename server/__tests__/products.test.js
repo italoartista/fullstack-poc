@@ -1,7 +1,7 @@
 const request = require('supertest');
 const express = require('express');
 const productRoutes = require('../src/routes/products');
-require('dotenv').config({ path: './.env.test' });
+require('dotenv').config({ path: './.env' });
 
 const app = express();
 app.use(express.json());
@@ -29,14 +29,14 @@ describe('Products API', () => {
   });
 
   it('should retrieve a product by id', async () => {
-    const res = await request(app).get('/products/1');
+    const res = await request(app).get('/products/2');
     expect(res.statusCode).toEqual(200);
     expect(res.body).toHaveProperty('id');
   });
 
   it('should update a product', async () => {
     const res = await request(app)
-      .put('/products/1')
+      .put('/products/2')
       .send({
         name: 'Updated Product',
         description: 'Updated Description',
