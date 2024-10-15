@@ -1,6 +1,5 @@
-import { Router } from 'express';
-
-import { createChat, getChats, getChatById, updateChat, deleteChat } from '../controllers/chat';
+const { Router} = require('express');
+const { createChat, getChats, getChatById, updateChat, deleteChat }  = require('../controllers/chat');
 
 const router = Router();
 
@@ -11,6 +10,6 @@ router.put('/:id', updateChat);
 router.delete('/:id', deleteChat);
 
 
-export default router;
+module.exports = { router };
 
 

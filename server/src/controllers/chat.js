@@ -1,8 +1,8 @@
 
-import Chat from '../models/chat.js';
+const Chat = require('../models/chat.js');
 
 
-export function createChat(req, res) {
+exports.module = function createChat(req, res) {
   const { name, description } = req.body;
   const chat = new Chat({ name, description });
   chat.save()
@@ -14,7 +14,7 @@ export function createChat(req, res) {
     });
 }
 
-export function getChats(req, res) {
+exports.module = function getChats(req, res) {
     Chat.find()
         .then((chats) => {
         res.status(200).json(chats);
@@ -24,7 +24,7 @@ export function getChats(req, res) {
         });
 }
 
-export function getChatById(req, res) {
+exports.module =function getChatById(req, res) {
     const { id } = req.params;
     Chat.findById(id)
         .then((chat) => {
@@ -35,7 +35,7 @@ export function getChatById(req, res) {
         });
 }
 
-export function updateChat(req, res) {
+exports.module = function updateChat(req, res) {
     const { id } = req.params;
     const { name, description } = req.body;
     Chat.findByIdAndUpdate({ _id: id }, { name, description })
@@ -46,8 +46,7 @@ export function updateChat(req, res) {
         res.status(400).json(error);
         });
 }
-
-export function deleteChat(req, res) {
+exports.module = function deleteChat(req, res) {
     const { id } = req.params;
     Chat.findByIdAndDelete(id)
         .then(() => {
